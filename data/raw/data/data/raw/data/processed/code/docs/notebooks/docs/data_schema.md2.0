@@ -1,0 +1,40 @@
+# Data Schema (V1)
+## Identifiers
+- player_id (string): Random unique ID, no identifying information
+- position_group (categorical): QB, RB, WR, OL, DL, LB, DB, ST
+
+## Performance Metrics
+- games_played (int)
+- snaps_estimate (int)
+- production_metric (float): Position-normalized (e.g., yards, pressures, tackles)
+- touchdowns_or_equivalent (int)
+- honors_binary (bool): Any all-league / team honors
+
+## Team & Competition Context
+- school_size (int)
+- competition_level (categorical): low / medium / high
+- team_win_pct (float)
+- program_resource_bucket (categorical): low / medium / high
+
+## Development Inputs
+- training_hours_per_week (float)
+- coaching_hours_per_week (float)
+- weight_room_access_days (int): per week
+- film_hours_per_week (float)
+- offseason_participation_weeks (int)
+
+## Opportunity Constraints
+- job_hours_per_week (float)
+- commute_minutes (int)
+- missed_offseason_binary (bool)
+
+## Outcome Labels
+- college_roster_binary (bool)
+- college_level (categorical): P5 / G5 / FCS / none
+- year1_snaps_bucket (categorical): none / low / medium / high
+
+## Notes & Assumptions
+- All non-outcome variables are measured at the high school level.
+- Self-reported inputs are treated as noisy and non-causal.
+- Outcome labels may reflect exposure bias and are interpreted accordingly.
+- Models will report uncertainty and avoid deterministic claims.
