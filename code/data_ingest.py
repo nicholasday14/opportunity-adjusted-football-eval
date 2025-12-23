@@ -74,6 +74,11 @@ def ingest(input_csv: str, output_path: str):
 
     df = df.rename(columns=RENAME_MAP)
 
+from code.bin_mapping import HONORS_LABEL_TO_LEVEL
+
+df["honors_level_num"] = df["honors_level"].apply(lambda x: HONORS_LABEL_TO_LEVEL.get(str(x).strip(), pd.NA))
+
+
 missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
 if missing:
     raise ValueError(f"Missing required columns after rename: {missing}")
