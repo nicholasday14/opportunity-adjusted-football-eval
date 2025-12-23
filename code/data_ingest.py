@@ -5,6 +5,26 @@ import os
 import uuid
 import pandas as pd
 
+REQUIRED_COLUMNS = [
+    "position_group",
+    "games_played",
+    "snaps_estimate",
+    "primary_production_stat",
+    "honors_level",
+    "school_classification",
+    "competition_level",
+    "team_record_or_win_pct",
+    "training_hours_per_week",
+    "coaching_hours_per_week",
+    "weight_room_access_days",
+    "film_hours_per_week",
+    "offseason_participation_weeks",
+    "job_hours_per_week",
+    "commute_minutes",
+    "missed_offseason_binary",
+    "consent_acknowledged"
+]
+
 def consent_to_bool(x):
     if x is None:
         return False
@@ -53,6 +73,11 @@ def ingest(input_csv: str, output_path: str):
     df = pd.read_csv(input_csv)
 
     df = df.rename(columns=RENAME_MAP)
+
+missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
+if missing:
+    raise ValueError(f"Missing required columns after rename: {missing}")
+
 
     # Consent gate
 df["consent_ok"] = df["consent_acknowledged"].apply(consent_to_bool)
