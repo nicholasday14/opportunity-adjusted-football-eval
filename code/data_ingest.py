@@ -5,6 +5,27 @@ import os
 import uuid
 import pandas as pd
 
+RENAME_MAP = {
+    "Primary Position": "position_group",
+    "How many games did you play this season?": "games_played",
+    "Total snaps played this season": "snaps_estimate",
+    "Enter your main stat (e.g., rushing yards, tackles, pressures). Include the stat name.": "primary_production_stat",
+    "Highest honors received this season (if any)": "honors_level",
+    "Approximate school enrollment": "school_classification",
+    "Level of competition faced - Based on league strength and level of opponents.": "competition_level",
+    "Team Record or Win percentage-Example: 8–3 or 72%": "team_record_or_win_pct",
+    "Training hours per week (outside of games)": "training_hours_per_week",
+    "Coaching or position-specific instructions hours per week": "coaching_hours_per_week",
+    "Weight room access per week": "weight_room_access_days",
+    "Film study hours per week": "film_hours_per_week",
+    "Number of weeks you participated in structured offseason training": "offseason_participation_weeks",
+    "Job hours per week during the season": "job_hours_per_week",
+    "Approximate daily commute time to practices or training": "commute_minutes",
+    "Did you miss 4 or more consecutive offseason weeks for non-injury reasons": "missed_offseason_binary",
+    "Consent to Participate": "consent_acknowledged"
+}
+
+
 from code.bin_mapping import (
     map_cat,
     POSITION_GROUP, SCHOOL_CLASSIFICATION, COMPETITION_LEVEL,
@@ -24,6 +45,8 @@ def to_bool(x):
 
 def ingest(input_csv: str, output_path: str):
     df = pd.read_csv(input_csv)
+
+    df = df.rename(columns=RENAME_MAP)
 
     # Assign random UUIDs at ingestion (no PII).
     df["player_id"] = [str(uuid.uuid4()) for _ in range(len(df))]
