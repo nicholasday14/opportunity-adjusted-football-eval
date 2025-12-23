@@ -106,6 +106,13 @@ df = df[df["consent_ok"]].copy()
     df["commute_minutes_num"] = df["commute_minutes"].apply(lambda x: map_cat(x, COMMUTE_MIN))
     df["missed_offseason_binary"] = df["missed_offseason_binary"].apply(to_bool)
 
+# sanity checks (fail fast if mappings break)
+assert df["position_group_num"].notna().any(), "All position groups mapped to NA"
+assert df["school_classification_num"].notna().any(), "All classifications mapped to NA"
+
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+
     # Coerce ints where appropriate
     df["games_played"] = pd.to_numeric(df["games_played"], errors="coerce").astype("Int64")
     df["offseason_participation_weeks"] = pd.to_numeric(df["offseason_participation_weeks"], errors="coerce").astype("Int64")
