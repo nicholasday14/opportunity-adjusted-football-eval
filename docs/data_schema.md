@@ -46,3 +46,29 @@
 - Self-reported inputs are treated as noisy and non-causal.
 - Outcome labels may reflect exposure bias and are interpreted accordingly.
 - Models will report uncertainty and avoid deterministic or causal claims.
+
+## Schema JSON
+{
+  "version": "v1",
+  "required_columns": [
+    "position_group",
+    "games_played",
+    "snaps_estimate",
+    "primary_production_stat",
+    "school_classification",
+    "competition_level",
+    "team_record_or_win_pct",
+    "training_hours_per_week",
+    "coaching_hours_per_week",
+    "weight_room_access_days",
+    "film_hours_per_week",
+    "offseason_participation_weeks",
+    "job_hours_per_week",
+    "commute_minutes",
+    "missed_offseason_binary",
+    "honors_level",
+    "college_roster_binary",
+    "college_level",
+    "year1_snaps_bucket"
+  ]
+}
