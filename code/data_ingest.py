@@ -5,6 +5,12 @@ import os
 import uuid
 import pandas as pd
 
+def consent_to_bool(x):
+    if x is None:
+        return False
+    s = str(x).strip().lower()
+    return ("agree" in s) or (s in {"yes", "true", "1"})
+
 RENAME_MAP = {
     "Primary Position": "position_group",
     "How many games did you play this season?": "games_played",
@@ -47,6 +53,10 @@ def ingest(input_csv: str, output_path: str):
     df = pd.read_csv(input_csv)
 
     df = df.rename(columns=RENAME_MAP)
+
+    # Consent gate
+df["consent_ok"] = df["consent_acknowledged"].apply(consent_to_bool)
+df = df[df["consent_ok"]].copy()
 
     # Assign random UUIDs at ingestion (no PII).
     df["player_id"] = [str(uuid.uuid4()) for _ in range(len(df))]
