@@ -38,3 +38,39 @@
 - Self-reported inputs are treated as noisy and non-causal.
 - Outcome labels may reflect exposure bias and are interpreted accordingly.
 - Models will report uncertainty and avoid deterministic claims.
+
+## Allowed Values & Measurement Rules
+
+### position_group
+- Allowed: QB, RB, WR, OL, DL, LB, DB, ST
+- Rule: Use primary position for evaluation; do not multi-label in V1.
+
+### competition_level
+- Allowed: low, medium, high
+- Rule: Assign based on league/classification + strength-of-schedule proxy (document method).
+
+### program_resource_bucket
+- Allowed: low, medium, high
+- Rule: Based on school football resources, not family income. Use a rubric.
+
+### honors_binary
+- Allowed: true/false
+- Rule: true if any verified all-conference/all-state/team captain-type honor.
+
+### snaps_estimate
+- Rule: If exact snaps unavailable, estimate using games_played * typical snaps by position, and mark in notes later (V2 adds a confidence flag).
+
+### production_metric
+- Rule: Store raw stat in data collection, normalize later by position (V1 keeps one numeric placeholder to avoid exploding columns).
+
+### offseason_participation_weeks
+- Rule: Count weeks of structured offseason training participation in last 12 months.
+
+### missed_offseason_binary
+- Allowed: true/false
+- Rule: true if player missed >= 4 consecutive offseason weeks due to constraints (not injury).
+
+### year1_snaps_bucket
+- Allowed: none, low, medium, high
+- Rule: Define cutoffs in evaluation docs once you pick a data source for college snaps.
+
